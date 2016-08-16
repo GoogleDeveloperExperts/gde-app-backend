@@ -89,7 +89,7 @@ class ActivityRecord(EndpointsModel):
             post_key = ndb.Key(ActivityPost, post_id)
             activity_post = post_key.get()
             total_reached += activity_post.metric_reached
-        return total_reached / len(self.activity_posts)
+        return total_reached 
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_indirect(self):
@@ -102,7 +102,7 @@ class ActivityRecord(EndpointsModel):
             post_key = ndb.Key(ActivityPost, post_id)
             activity_post = post_key.get()
             total_indirect += activity_post.metric_indirect
-        return total_indirect / len(self.activity_posts)
+        return total_indirect 
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_trained(self):
@@ -115,7 +115,7 @@ class ActivityRecord(EndpointsModel):
             post_key = ndb.Key(ActivityPost, post_id)
             activity_post = post_key.get()
             metric_trained += activity_post.metric_trained
-        return metric_trained / len(self.activity_posts)
+        return metric_trained 
 
     def ApiKeySet(self, value):
         self._api_key = value
