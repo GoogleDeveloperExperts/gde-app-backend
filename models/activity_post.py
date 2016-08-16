@@ -18,7 +18,8 @@ class ActivityPost(EndpointsModel):
         'url',
         'metric_reached',
         'metric_indirect',
-        'metric_trained'
+        'metric_trained',
+        'activity_record'
     )
 
     _api_key = None
@@ -31,6 +32,8 @@ class ActivityPost(EndpointsModel):
     metric_indirect = ndb.IntegerProperty()
     metric_trained = ndb.IntegerProperty()
 
+    activity_record = ndb.StringProperty()
+
     def ApiKeySet(self, value):
         self._api_key = value
 
@@ -38,15 +41,20 @@ class ActivityPost(EndpointsModel):
     def api_key(self):
         return self._api_key
 
-    def IdSet(self, value):
-        if not isinstance(value, basestring):
-            raise TypeError('ID must be a string.')
-        self.UpdateFromKey(ndb.Key(ActivityPost, value))
 
-    @EndpointsAliasProperty(setter=IdSet, required=True)
-    def id(self):
-        if self.key is not None:
-            return self.key.string_id()
+
+    # in the previous version the activity post as equal the the G+ post it
+    # this is why we were setting it. This is no longer necessary. 
+    #
+    # def IdSet(self, value):
+    #     if not isinstance(value, basestring):
+    #         raise TypeError('ID must be a string.')
+    #     self.UpdateFromKey(ndb.Key(ActivityPost, value))
+
+    # @EndpointsAliasProperty(setter=IdSet, required=True)
+    # def id(self):
+    #     if self.key is not None:
+    #         return self.key.string_id()
 
     # fields below are not part of MVP and maybe removed
 
