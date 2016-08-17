@@ -10,34 +10,49 @@ class AccountGeoCode(EndpointsModel):
 
 
 class Account(EndpointsModel):
-
-    _message_fields_schema = ('id', 'gplus_id', 'gplus_page', 'type',
-                              'display_name', 'pic_url', 'geocode',
-                              'real_name', 'location', 'region', 'email',
-                              'country', 'ctry_filename', 'product_group',
-                              'pg_filename', 'deleted', 'so_id')
+    _message_fields_schema = (
+        'id',
+        'display_name',
+        'email',
+        'type',
+        'city',
+        'country',
+        'social_twitter',
+        'social_googleplus',
+        'social_facebook',
+        'social_stackoverflow',
+        'social_github',
+        'social_linkedin',
+        'social_website',
+        'pg_filename',
+        'pic_url',
+        'product_group',
+        'skills',
+        'biography',
+        'product_group'
+    )
 
     _api_key = None
 
-    gplus_id = ndb.StringProperty()
-    gplus_page = ndb.StringProperty()
-    type = ndb.StringProperty()
+    # MVP fields
     display_name = ndb.StringProperty()
-    real_name = ndb.StringProperty()
-    email = ndb.StringProperty()
-    auth_email = ndb.StringProperty()
-    location = ndb.StringProperty()
-    region = ndb.StringProperty()
+    email = ndb.StringProperty(required=True)
+    type = ndb.StringProperty() # GDE type, read only field
+    city = ndb.StringProperty()
     country = ndb.StringProperty()
-    ctry_filename = ndb.StringProperty()
-    geocode = ndb.StructuredProperty(AccountGeoCode)
-    product_group = ndb.StringProperty(repeated=True)
+    social_twitter = ndb.StringProperty()
+    social_googleplus = ndb.StringProperty()
+    social_facebook = ndb.StringProperty()
+    social_stackoverflow = ndb.StringProperty()
+    social_github = ndb.StringProperty()
+    social_linkedin = ndb.StringProperty()
+    social_website = ndb.StringProperty()
     pg_filename = ndb.StringProperty()
-    deleted = ndb.BooleanProperty()
     pic_url = ndb.StringProperty()
+    product_group = ndb.StringProperty(repeated=True)
+    skills = ndb.StringProperty(repeated=True)
+    biography = ndb.TextProperty()
 
-    # Stack Overflow ID : issue #211 on github
-    so_id = ndb.StringProperty()
 
     def ApiKeySet(self, value):
         self._api_key = value
@@ -55,3 +70,16 @@ class Account(EndpointsModel):
     def id(self):
         if self.key is not None:
             return self.key.string_id()
+
+
+    # fields below are not part of MVP and maybe removed
+    gplus_id = ndb.StringProperty()
+    gplus_page = ndb.StringProperty()
+    real_name = ndb.StringProperty()
+    auth_email = ndb.StringProperty()
+    region = ndb.StringProperty()
+    ctry_filename = ndb.StringProperty()
+    geocode = ndb.StructuredProperty(AccountGeoCode)
+    deleted = ndb.BooleanProperty()
+    so_id = ndb.StringProperty()
+
